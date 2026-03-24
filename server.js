@@ -2,22 +2,23 @@ const express = require("express");
 const fetch = require("node-fetch");
 
 const app = express();
+
+// HER ŞEYİ PARSE ET
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // TEST
 app.get("/", (req, res) => {
   res.send("OK WORKING");
 });
 
-// AI ENDPOINT
-app.post("/ai", async (req, res) => {
+// YENİ ENDPOINT (ÖNEMLİ)
+app.post("/chat", async (req, res) => {
   try {
-    console.log("REQ BODY:", req.body);
-
     const msg = req.body.msg;
 
     if (!msg) {
-      return res.status(400).send("No message");
+      return res.send("No message");
     }
 
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -37,15 +38,13 @@ app.post("/ai", async (req, res) => {
 
     const data = await response.json();
 
-    console.log("AI RESPONSE:", data);
-
     const reply = data?.choices?.[0]?.message?.content || "No response";
 
     res.send(reply);
 
   } catch (err) {
-    console.log("ERROR:", err);
-    res.status(500).send("ERROR");
+    console.log(err);
+    res.send("ERROR");
   }
 });
 
