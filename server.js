@@ -1,4 +1,4 @@
-import express from "express";
+const express = require("express");
 
 const app = express();
 app.use(express.json());
@@ -10,7 +10,7 @@ app.get("/", (req, res) => {
   res.send("OK WORKING");
 });
 
-// ORACLE ENDPOINT
+// ORACLE
 app.get("/ask", async (req, res) => {
   const msg = req.query.msg;
 
@@ -46,9 +46,7 @@ app.get("/ask", async (req, res) => {
       return res.send("No response from AI");
     }
 
-    const reply = data.choices[0].message.content;
-
-    res.send(reply);
+    res.send(data.choices[0].message.content);
 
   } catch (err) {
     res.send("Server error");
