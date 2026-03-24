@@ -4,14 +4,12 @@ const fetch = require("node-fetch");
 const app = express();
 app.use(express.json());
 
+// ROOT TEST
 app.get("/", (req, res) => {
-  res.send("Oracle is alive.");
+  res.send("OK WORKING");
 });
 
-app.get("/", (req, res) => {
-  res.send("Oracle is alive.");
-});
-
+// AI ENDPOINT
 app.post("/ai", async (req, res) => {
   try {
     const { msg } = req.body;
@@ -25,7 +23,7 @@ app.post("/ai", async (req, res) => {
       body: JSON.stringify({
         model: "gpt-4.1-mini",
         messages: [
-          { role: "system", content: "You are a mysterious oracle. Short answers." },
+          { role: "system", content: "You are a mysterious oracle. Speak short." },
           { role: "user", content: msg }
         ]
       })
@@ -33,13 +31,13 @@ app.post("/ai", async (req, res) => {
 
     const data = await response.json();
 
-    const reply = data?.choices?.[0]?.message?.content || "Silence...";
+    const reply = data?.choices?.[0]?.message?.content || "No response";
 
     res.send(reply);
 
   } catch (err) {
     console.log(err);
-    res.send("Error...");
+    res.send("ERROR");
   }
 });
 
