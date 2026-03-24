@@ -8,6 +8,10 @@ app.get("/", (req, res) => {
   res.send("Oracle is alive.");
 });
 
+app.get("/", (req, res) => {
+  res.send("Oracle is alive.");
+});
+
 app.post("/ai", async (req, res) => {
   try {
     const { msg } = req.body;
