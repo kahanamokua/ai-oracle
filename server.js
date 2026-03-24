@@ -3,19 +3,15 @@ const fetch = require("node-fetch");
 
 const app = express();
 
-// HER ŞEYİ PARSE ET
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
 // TEST
 app.get("/", (req, res) => {
   res.send("OK WORKING");
 });
 
-// YENİ ENDPOINT (ÖNEMLİ)
-app.post("/chat", async (req, res) => {
+// 🔥 TEK ENDPOINT (GET)
+app.get("/ask", async (req, res) => {
   try {
-    const msg = req.body.msg;
+    const msg = req.query.msg;
 
     if (!msg) {
       return res.send("No message");
